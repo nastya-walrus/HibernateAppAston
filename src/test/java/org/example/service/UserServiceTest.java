@@ -108,14 +108,14 @@ public class UserServiceTest {
     public void testWelcomeMessageExit() throws IOException {
         when(reader.readLine()).thenReturn("6");
 
-        userService.welcomeMessage(userDAO);
+        userService.welcomeMessage();
     }
 
     @Test
     public void testWelcomeMessageUnknownCommand() throws IOException {
         when(reader.readLine()).thenReturn("999");
 
-        userService.welcomeMessage(userDAO);
+        userService.welcomeMessage();
 
         verifyNoInteractions(userDAO);
     }
