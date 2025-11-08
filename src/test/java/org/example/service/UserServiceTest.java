@@ -4,6 +4,7 @@ import org.example.DAO.UserDAO;
 import org.example.entity.User;
 import org.junit.jupiter.api.BeforeEach;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
@@ -28,6 +29,7 @@ public class UserServiceTest {
         userService = new UserService(userDAO, reader);
     }
 
+    @DisplayName("Проверка создания юзера")
     @Test
     public void testCreateUser() throws IOException {
         Mockito.when(reader.readLine()).thenReturn("Максим", "maxim@mail.ru", "30");
@@ -44,6 +46,7 @@ public class UserServiceTest {
         assertNotNull(created.getCreatedAt());
     }
 
+    @DisplayName("Успешное получение юзера")
     @Test
     public void testFindUserFound() throws IOException {
         when(reader.readLine()).thenReturn("1");
@@ -55,8 +58,8 @@ public class UserServiceTest {
         verify(userDAO).getUser(1);
     }
 
+    @DisplayName("Неуспешное получение юзера")
     @Test
-
     public void testFindUserNotFound() throws IOException {
         when(reader.readLine()).thenReturn("999");
         when(userDAO.getUser(999)).thenReturn(null);
@@ -66,6 +69,7 @@ public class UserServiceTest {
         verify(userDAO).getUser(999);
     }
 
+    @DisplayName("Проверка получения списка юзеров")
     @Test
     public void testListUsers() {
         List<User> mockUsers = List.of(
@@ -79,6 +83,7 @@ public class UserServiceTest {
         verify(userDAO).getAllUsers();
     }
 
+    @DisplayName("Проверка обновления юзера")
     @Test
     public void testUpdateUser() throws IOException {
         when(reader.readLine()).thenReturn("1", "NewName", "newname@mail.ru", "35");
@@ -95,6 +100,7 @@ public class UserServiceTest {
         assertEquals(35, updated.getAge());
     }
 
+    @DisplayName("Проверка удаления юзера")
     @Test
     public void testDeleteUser() throws IOException {
         when(reader.readLine()).thenReturn("2");
@@ -104,6 +110,7 @@ public class UserServiceTest {
         verify(userDAO).deleteUser(2);
     }
 
+    @DisplayName("Приветсвенное сообщение: завершение программы")
     @Test
     public void testWelcomeMessageExit() throws IOException {
         when(reader.readLine()).thenReturn("6");
@@ -111,6 +118,7 @@ public class UserServiceTest {
         userService.welcomeMessage();
     }
 
+    @DisplayName("Приветсвенное сообщение: неизвестная команда")
     @Test
     public void testWelcomeMessageUnknownCommand() throws IOException {
         when(reader.readLine()).thenReturn("999");
